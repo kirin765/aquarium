@@ -16,7 +16,7 @@ namespace PocketReef
         readonly List<Missile> missiles = new List<Missile>();
         readonly int[] goals = { 100, 1000, 3000, 10000 };
         Texture2D gold, hunter, shark, sick, coinSheet, pixel;
-        GUIStyle small, body, title, button, tag;
+        GUIStyle small, body, title, button, tag, centered;
         int money, level, selectedTool, feedCapacity, feedUpgradePrice;
         float epidemicTimer, messageTime, elapsed;
         bool paused, won, lost, help, medicineReady;
@@ -326,6 +326,7 @@ namespace PocketReef
             body = new GUIStyle(GUI.skin.label) { fontSize = 13, alignment = TextAnchor.MiddleLeft, wordWrap = true };
             body.normal.textColor = Hex("e2f5ec");
             small = new GUIStyle(body) { fontSize = 10 };
+            centered = new GUIStyle(small) { alignment = TextAnchor.MiddleCenter };
             tag = new GUIStyle(small) { fontSize = 9, alignment = TextAnchor.MiddleCenter };
             tag.normal.textColor = Hex("cfe6dc");
             title = new GUIStyle(body) { fontSize = 25, fontStyle = FontStyle.Bold };
@@ -438,8 +439,8 @@ namespace PocketReef
                 var rect = new Rect(f.position.x - size / 2, f.position.y - size / 3, size, size * .65f);
                 bool flip = f.target.x < f.position.x;
                 GUI.DrawTextureWithTexCoords(rect, f.disease > 0 ? sick : f.tier == 2 ? shark : f.hunter ? hunter : gold, new Rect(flip ? 1 : 0, 0, flip ? -1 : 1, 1));
-                Label(new Rect(f.position.x - 20, f.position.y + 14, 70, 17), f.disease > 0 ? "SICK " + (1 + Mathf.Min(2, (int)(f.disease / 10))) + "/3" : f.tier == 2 ? "SHARK" : f.hunter ? "HUNTER" : f.Adult ? "LV.2" : "LV.1", small);
-                if (f.hunger < 35) Label(new Rect(f.position.x - 18, f.position.y - 30, 60, 18), "HUNGRY", small);
+                Label(new Rect(f.position.x - 35, f.position.y + 14, 70, 17), f.disease > 0 ? "SICK " + (1 + Mathf.Min(2, (int)(f.disease / 10))) + "/3" : f.tier == 2 ? "SHARK" : f.hunter ? "HUNTER" : f.Adult ? "LV.2" : "LV.1", centered);
+                if (f.hunger < 35) Label(new Rect(f.position.x - 30, f.position.y - 30, 60, 18), "HUNGRY", centered);
                 if (f.disease > 0) { Box(new Rect(f.position.x - 15, f.position.y - 19, 30, 3), "713b53"); Box(new Rect(f.position.x - 15, f.position.y - 19, 30 * (1 - f.disease / 30), 3), "bbdf83"); }
             }
             foreach (var m in missiles)
